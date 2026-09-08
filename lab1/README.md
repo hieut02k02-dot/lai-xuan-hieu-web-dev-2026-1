@@ -6,7 +6,10 @@
 
 ## 🚀 Демонстрация
 
-Сайт доступен по ссылке: [Вкус Вьетнама — Вьетнамская кухня в Москве](https://lab1-lyong-web-dev-2026-1.vercel.app/)
+# lai-xuan-hieu-web-dev-2026-1
+
+**Сайт лабораторной работы №1:**  
+https://hieut02k02-dot.github.io/lai-xuan-hieu-web-dev-2026-1/lab1/lab1.html
 
 ## 📁 Структура проекта
 

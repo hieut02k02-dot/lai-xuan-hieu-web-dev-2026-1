@@ -1,0 +1,253 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: #ffffff;
+    font-family: "Montserrat", Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #111111;
+}
+
+/* ===== HEADER ===== */
+
+.header {
+    max-width: 70%;
+    margin: 0 auto;
+    padding: 25px 0 20px;
+}
+
+.header h1 {
+    margin: 0 0 25px;
+    font-size: 24px;
+    font-weight: 700;
+    color: #111111;
+}
+
+.nav {
+    display: flex;
+    gap: 20px;
+}
+
+.nav a {
+    text-decoration: none;
+    font-family: "Montserrat", Arial, sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    color: #111111;
+    transition: color 0.3s;
+}
+
+.nav a:hover {
+    color: #d94b32;
+}
+
+/* ===== MAIN ===== */
+
+.main {
+    max-width: 70%;
+    margin: 0 auto;
+    padding: 0 0 30px;
+}
+
+.company,
+.advantages,
+.popular {
+    margin-bottom: 25px;
+}
+
+.company h2,
+.advantages h2,
+.popular h2 {
+    margin-bottom: 15px;
+    font-size: 18px;
+    font-weight: 700;
+    color: #111111;
+}
+
+/* ===== COMPANY ===== */
+
+.company > img {
+    display: block;
+    width: 60%;
+    height: auto;
+    margin-bottom: 15px;
+    border-radius: 8px;
+}
+
+.company p {
+    margin-bottom: 12px;
+    font-size: 11px;
+    font-weight: 400;
+    color: #222222;
+}
+
+/* ===== ADVANTAGES ===== */
+
+.advantages ul {
+    padding-left: 18px;
+}
+
+.advantages li {
+    margin: 2px 0;
+    font-size: 11px;
+    font-weight: 400;
+    color: #222222;
+}
+
+/* ===== TABLE ===== */
+
+table {
+    width: 100%;
+    border: 1px solid #222222;
+    border-collapse: collapse;
+    text-align: center;
+    font-size: 10px;
+}
+
+th,
+td {
+    padding: 8px 6px;
+    border: 1px solid #222222;
+    text-align: center;
+}
+
+th {
+    font-weight: 700;
+    color: #111111;
+    background-color: #f5f5f5;
+}
+
+td {
+    font-weight: 400;
+    color: #222222;
+}
+
+td:nth-child(3) {
+    text-align: left;
+}
+
+/* ===== DISH IMAGE ===== */
+
+.dish-image {
+    width: 100px;
+    height: 80px;
+    margin: 0 auto;
+    overflow: hidden;
+    border-radius: 6px;
+}
+
+.dish-image img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.dish-image img:hover {
+    transform: scale(1.05);
+}
+
+/* ===== FOOTER ===== */
+
+.footer {
+    margin-top: 10px;
+    padding: 20px 0;
+    background-color: black;
+    color: white;
+}
+
+.footer-content {
+    max-width: 70%;
+    margin: 0 auto;
+}
+
+.footer p {
+    margin-bottom: 6px;
+    font-size: 11px;
+    font-weight: 400;
+    color: white;
+}
+
+.footer a {
+    text-decoration: none;
+    font-family: "Montserrat", Arial, sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    color: white;
+    transition: color 0.3s;
+}
+
+.footer a:hover {
+    color: #f2b544;
+}
+
+/* ===== RESPONSIVE ===== */
+
+@media (max-width: 950px) {
+    .header,
+    .main,
+    .footer-content {
+        max-width: 85%;
+    }
+}
+
+@media (max-width: 600px) {
+    .header,
+    .main,
+    .footer-content {
+        max-width: 92%;
+    }
+
+    .header {
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+
+    .header h1 {
+        font-size: 22px;
+        margin-bottom: 20px;
+    }
+
+    .nav {
+        flex-wrap: wrap;
+        gap: 10px 15px;
+    }
+
+    .company h2,
+    .advantages h2,
+    .popular h2 {
+        font-size: 17px;
+    }
+
+    .company > img {
+        width: 100%;
+    }
+
+    table {
+        font-size: 8px;
+    }
+
+    th,
+    td {
+        padding: 6px 4px;
+    }
+
+    .dish-image {
+        width: 70px;
+        height: 60px;
+    }
+
+    .footer p,
+    .footer a {
+        font-size: 10px;
+    }
+}

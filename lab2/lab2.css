@@ -1,0 +1,592 @@
+/* ============================================================
+   LAB 2 — Food Construct
+   ============================================================ */
+
+/* ===== RESET ===== */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: #ffffff;
+    font-family: "Montserrat", Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #111111;
+
+    /* Прижимаем футер к низу */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* ============================================================
+   HEADER — прижат влево, компактный
+   ============================================================ */
+
+.header {
+    max-width: 70%;
+    width: 100%;
+    margin: 0 auto;
+    padding: 25px 0 20px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 12px;
+
+    text-align: left;
+}
+
+.header-title {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 700;
+    color: #111111;
+    text-align: left;
+    align-self: flex-start;
+}
+
+/* ===== NAV ===== */
+
+.nav {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 20px;
+
+    width: 100%;
+    text-align: left;
+}
+
+.nav a {
+    text-decoration: none;
+    font-family: "Montserrat", Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: #111111;
+    transition: color 0.3s;
+    white-space: nowrap;
+}
+
+.nav a:hover {
+    color: #d94b32;
+}
+
+.nav a.active {
+    color: tomato;
+}
+
+/* ============================================================
+   MAIN
+   ============================================================ */
+
+.main {
+    max-width: 70%;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 0 40px;
+    flex: 1;
+}
+
+/* ============================================================
+   СЕКЦИИ МЕНЮ
+   ============================================================ */
+
+.menu-section {
+    margin-bottom: 45px;
+}
+
+.section-title {
+    margin-bottom: 20px;
+    font-size: 16px;
+    font-weight: 700;
+    color: #111111;
+    text-align: left;
+}
+
+/* ============================================================
+   СЕТКА БЛЮД (Grid 3 колонки)
+   ============================================================ */
+
+.dishes {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+}
+
+/* ============================================================
+   КАРТОЧКА БЛЮДА (Flexbox)
+   ============================================================ */
+
+.dish {
+    display: flex;
+    flex-direction: column;
+
+    padding: 30px 40px;
+    border-radius: 35px;
+    cursor: pointer;
+    filter: drop-shadow(17px 19px 24px rgba(0, 0, 0, 0.13));
+    background-color: #ffffff;
+    border: 2px solid transparent;
+
+    transition: border-color 0.3s;
+}
+
+.dish:hover {
+    border: 2px solid tomato;
+}
+
+.dish:hover .dish-button {
+    background-color: tomato;
+}
+
+/* ===== ИЗОБРАЖЕНИЕ ===== */
+
+.dish img {
+    width: 100%;
+    height: 180px;
+    border-radius: 35px;
+    margin-bottom: 20px;
+    object-fit: cover;
+    background-color: #f1eee9;
+}
+
+/* ===== ЦЕНА ===== */
+
+.dish-price {
+    margin-bottom: 5px;
+    font-size: 20px;
+    font-weight: 700;
+    color: #111111;
+}
+
+/* ===== НАЗВАНИЕ ===== */
+
+.dish-name {
+    margin-bottom: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #111111;
+    flex-grow: 1;
+    line-height: 1.4;
+}
+
+/* ===== ВЕС / ОБЪЁМ ===== */
+
+.dish-weight {
+    margin-bottom: 15px;
+    margin-top: auto;
+    font-size: 13px;
+    color: #888888;
+}
+
+/* ===== КНОПКА ===== */
+
+.dish-button {
+    margin-top: auto;
+    padding: 10px 30px;
+    background-color: #f1eee9;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+
+    font-family: "Montserrat", Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: #111111;
+
+    transition: background-color 0.3s;
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+
+.footer {
+    margin-top: 10px;
+    padding: 20px 0;
+    background-color: #000000;
+    color: #ffffff;
+}
+
+.footer-content {
+    max-width: 70%;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.footer p {
+    margin-bottom: 6px;
+    font-size: 11px;
+    font-weight: 400;
+    color: #ffffff;
+}
+
+.footer a {
+    text-decoration: none;
+    font-family: "Montserrat", Arial, sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    color: #ffffff;
+    transition: color 0.3s;
+}
+
+.footer a:hover {
+    color: #f2b544;
+}
+
+/* ============================================================
+   АДАПТИВНОСТЬ
+   ============================================================ */
+
+/* Планшеты: ≤800px */
+@media (max-width: 800px) {
+
+    .header,
+    .main,
+    .footer-content {
+        max-width: 85%;
+    }
+
+    .dishes {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .nav {
+        justify-content: space-between;
+    }
+}
+
+/* Мобильные: ≤600px */
+@media (max-width: 600px) {
+
+    .header,
+    .main,
+    .footer-content {
+        max-width: 92%;
+    }
+
+    .header {
+        align-items: center;
+    }
+
+    .header-title {
+        font-size: 22px;
+        text-align: center;
+        align-self: center;
+    }
+
+    .nav {
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .nav a {
+        font-size: 18px;
+    }
+
+    .section-title {
+        text-align: center;
+    }
+
+    .dishes {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ============================================================
+   ФОРМА ЗАКАЗА (Лабораторная работа № 3)
+   ============================================================ */
+
+.order-section {
+    max-width: 70%;
+    width: 100%;
+    margin: 0 auto 40px;
+    padding: 0;
+}
+
+.order-title {
+    margin-bottom: 25px;
+    font-size: 20px;
+    font-weight: 700;
+    color: #111111;
+    text-align: left;
+}
+
+.order-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+/* ===== FIELDSET ===== */
+
+.order-fieldset {
+    padding: 30px;
+    border: 1px solid #dcdcdc;
+    border-radius: 15px;
+    background-color: #fafafa;
+}
+
+.order-legend {
+    padding: 0 10px;
+    font-size: 16px;
+    font-weight: 700;
+    color: #111111;
+}
+
+/* ===== FORM ROWS ===== */
+
+.form-row {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+.form-row label {
+    margin-bottom: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #111111;
+}
+
+/* ===== INPUTS / SELECTS / TEXTAREA ===== */
+
+.form-row input[type="text"],
+.form-row input[type="email"],
+.form-row input[type="tel"],
+.form-row input[type="time"],
+.form-row select,
+.form-row textarea {
+    width: 100%;
+    padding: 10px 15px;
+    font-family: "Montserrat", Arial, sans-serif;
+    font-size: 14px;
+    color: #111111;
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    border-radius: 10px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.form-row input:focus,
+.form-row select:focus,
+.form-row textarea:focus {
+    outline: none;
+    border-color: tomato;
+    box-shadow: 0 0 0 2px rgba(255, 99, 71, 0.2);
+}
+
+.form-row textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+/* ===== CHECKBOX ===== */
+
+.form-row--checkbox {
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+.form-row--checkbox input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    accent-color: tomato;
+    flex-shrink: 0;
+}
+
+.form-row--checkbox label {
+    margin-bottom: 0;
+    cursor: pointer;
+}
+
+/* ===== RADIO GROUP ===== */
+
+.radio-group {
+    padding: 15px;
+    margin-bottom: 15px;
+    border: 1px solid #dcdcdc;
+    border-radius: 10px;
+    background-color: #ffffff;
+}
+
+.radio-group legend {
+    padding: 0 8px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #111111;
+}
+
+.radio-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+.radio-option:last-child {
+    margin-bottom: 0;
+}
+
+.radio-option input[type="radio"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    accent-color: tomato;
+}
+
+.radio-option label {
+    font-size: 13px;
+    color: #111111;
+    cursor: pointer;
+}
+
+/* ===== BUTTONS ===== */
+
+.form-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.btn {
+    padding: 12px 30px;
+    font-family: "Montserrat", Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.btn--reset {
+    background-color: #f1eee9;
+    color: #111111;
+}
+
+.btn--reset:hover {
+    background-color: #e0dcd5;
+}
+
+.btn--submit {
+    background-color: tomato;
+    color: #ffffff;
+}
+
+.btn--submit:hover {
+    background-color: #d94b32;
+}
+
+/* ============================================================
+   АДАПТИВНОСТЬ ФОРМЫ
+   ============================================================ */
+
+@media (max-width: 800px) {
+    .order-section {
+        max-width: 85%;
+    }
+
+    .order-form {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+    .order-section {
+        max-width: 92%;
+    }
+
+    .order-title {
+        text-align: center;
+    }
+
+    .form-buttons {
+        flex-direction: column;
+    }
+
+    .btn {
+        width: 100%;
+    }
+}
+
+/* ============================================================
+   ВЫБРАННОЕ БЛЮДО — выделение карточки
+   ============================================================ */
+
+.dish--selected {
+    border: 2px solid tomato;
+}
+
+/* ============================================================
+   БЛОК «ВАШ ЗАКАЗ» В ФОРМЕ
+   ============================================================ */
+
+.order-list {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #ffffff;
+    border: 1px solid #dcdcdc;
+    border-radius: 10px;
+}
+
+.order-empty {
+    font-size: 14px;
+    color: #888888;
+    text-align: center;
+    padding: 10px 0;
+    font-style: italic;
+}
+
+.order-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px dashed #e0e0e0;
+    font-size: 14px;
+}
+
+.order-item:last-child {
+    border-bottom: none;
+}
+
+.order-item--empty .order-name {
+    color: #888888;
+    font-style: italic;
+}
+
+.order-category {
+    font-weight: 700;
+    color: #111111;
+    flex-shrink: 0;
+}
+
+.order-name {
+    flex-grow: 1;
+    color: #333333;
+}
+
+.order-price {
+    font-weight: 700;
+    color: tomato;
+    flex-shrink: 0;
+}
+

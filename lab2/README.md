@@ -14,7 +14,7 @@
 ## 🚀 Демонстрация
 
 **Сайт лабораторной работы №2:**
-https://hieut02k02-dot.github.io/lai-xuan-hieu-web-dev-2026-1/lab2/lab2.html
+https://hieut02k02-dot.github.io/lai-xuan-hieu-web-dev-2026-1/lab2/
 
 **Репозиторий GitHub:**
 https://github.com/hieut02k02-dot/lai-xuan-hieu-web-dev-2026-1

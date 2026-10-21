@@ -14,6 +14,7 @@ html {
     scroll-behavior: smooth;
 }
 
+
 body {
     background-color: #ffffff;
     font-family: "Montserrat", Arial, sans-serif;
@@ -32,7 +33,7 @@ body {
    ============================================================ */
 
 .header {
-    max-width: 70%;
+    max-width: 85%;
     width: 100%;
     margin: 0 auto;
     padding: 25px 0 20px;
@@ -92,7 +93,7 @@ body {
    ============================================================ */
 
 .main {
-    max-width: 70%;
+    max-width: 85%;
     width: 100%;
     margin: 0 auto;
     padding: 0 0 40px;
@@ -121,8 +122,11 @@ body {
 
 .dishes {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 10px;
+    /* Tự động chia cột: tối thiểu 280px, tối đa chia đều (1fr) */
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+    justify-content: start;
+    /* Đảm bảo các thẻ luôn căn từ trái sang */
 }
 
 /* ============================================================
@@ -212,16 +216,15 @@ body {
 /* ============================================================
    FOOTER
    ============================================================ */
-
 .footer {
-    margin-top: 10px;
+    margin-top: auto; /* Đổi 10px thành auto để nó tự đẩy xuống đáy */
     padding: 20px 0;
     background-color: #000000;
     color: #ffffff;
+    width: 100%;
 }
-
 .footer-content {
-    max-width: 70%;
+    max-width: 85%;
     width: 100%;
     margin: 0 auto;
 }
@@ -311,7 +314,7 @@ body {
    ============================================================ */
 
 .order-section {
-    max-width: 70%;
+    max-width: 85%;
     width: 100%;
     margin: 0 auto 40px;
     padding: 0;
@@ -498,31 +501,41 @@ body {
    АДАПТИВНОСТЬ ФОРМЫ
    ============================================================ */
 
+/* Tablet: ≤ 800px */
 @media (max-width: 800px) {
+
+    .header,
+    .main,
+    .footer-content,
     .order-section {
-        max-width: 85%;
+        max-width: 92%;
+        /* Rộng hơn chút trên tablet */
     }
 
+    .dishes {
+        grid-template-columns: repeat(2, 1fr);
+        /* 2 cột */
+    }
+
+    /* Form chuyển thành 1 cột dọc */
     .order-form {
         grid-template-columns: 1fr;
     }
 }
 
+/* Mobile: ≤ 600px */
 @media (max-width: 600px) {
+
+    .header,
+    .main,
+    .footer-content,
     .order-section {
-        max-width: 92%;
+        max-width: 95%;
     }
 
-    .order-title {
-        text-align: center;
-    }
-
-    .form-buttons {
-        flex-direction: column;
-    }
-
-    .btn {
-        width: 100%;
+    .dishes {
+        grid-template-columns: 1fr;
+        /* 1 cột */
     }
 }
 
@@ -590,3 +603,133 @@ body {
     flex-shrink: 0;
 }
 
+/* ============================================================
+   LAB 4: CSS CHO CÁC THÀNH PHẦN JS SINH RA
+   ============================================================ */
+
+/* Viền đỏ cho card món ăn khi được chọn */
+.dish--selected {
+    border: 2px solid tomato;
+}
+
+/* Khung danh sách món trong "Ваш заказ" */
+.order-list {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #ffffff;
+    border: 1px solid #dcdcdc;
+    border-radius: 10px;
+}
+
+/* Chữ "Ничего не выбрано" */
+.order-empty {
+    font-size: 14px;
+    color: #888888;
+    text-align: center;
+    padding: 10px 0;
+    font-style: italic;
+}
+
+/* Từng dòng món ăn đã chọn */
+.order-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px dashed #e0e0e0;
+    font-size: 14px;
+}
+
+.order-item:last-child {
+    border-bottom: none;
+}
+
+.order-item--empty .order-name {
+    color: #888888;
+    font-style: italic;
+}
+
+.order-category {
+    font-weight: 700;
+    color: #111111;
+    flex-shrink: 0;
+}
+
+.order-name {
+    flex-grow: 1;
+    color: #333333;
+}
+
+.order-price {
+    font-weight: 700;
+    color: tomato;
+    flex-shrink: 0;
+}
+
+/* Khung tổng tiền */
+.order-cost {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 15px 20px;
+    background-color: #fff5f3;
+    border: 2px solid tomato;
+    border-radius: 10px;
+    font-size: 16px;
+}
+
+.order-cost-label {
+    font-weight: 500;
+    color: #111111;
+}
+
+.order-cost-value {
+    font-size: 20px;
+    font-weight: 700;
+    color: tomato;
+}
+
+/* ============================================================
+   LÀM ĐẸP BỘ LỌC (FILTERS)
+   ============================================================ */
+
+.filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    /* Khoảng cách giữa các nút */
+    margin-bottom: 25px;
+}
+
+.filter-btn {
+    padding: 10px 20px;
+    background-color: #ffffff;
+    border: 2px solid #e0e0e0;
+    /* Viền xám nhạt */
+    border-radius: 30px;
+    /* Bo tròn hoàn toàn */
+    cursor: pointer;
+    font-family: "Montserrat", Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: #333333;
+    transition: all 0.3s ease;
+    /* Hiệu ứng mượt */
+}
+
+/* Khi rê chuột vào */
+.filter-btn:hover {
+    border-color: tomato;
+    color: tomato;
+}
+
+/* Khi nút được chọn (Active) */
+.filter-btn.active {
+    background-color: tomato;
+    border-color: tomato;
+    color: #ffffff;
+    box-shadow: 0 4px 10px rgba(255, 99, 71, 0.3);
+    /* Đổ bóng nhẹ màu đỏ */
+}

@@ -32,259 +32,156 @@
 
     <main class="main">
 
-        <!-- ===== СУПЫ ===== -->
-        <section class="menu-section">
-            <h2 class="section-title">Выберите суп</h2>
-
-            <div class="dishes">
-
-                <div class="dish">
-                    <img src="images/soup1.jpg" alt="Фо Бо">
-                    <p class="dish-price">500 ₽</p>
-                    <p class="dish-name">Фо Бо</p>
-                    <p class="dish-weight">350 г</p>
-                    <button class="dish-button">Добавить</button>
+            <!-- ===== 1. СУПЫ ===== -->
+            <section class="menu-section" data-category="soup">
+                <h2 class="section-title">Выберите суп</h2>
+                <div class="filters">
+                    <button class="filter-btn" data-kind="fish">рыбный</button>
+                    <button class="filter-btn" data-kind="meat">мясной</button>
+                    <button class="filter-btn" data-kind="veg">вегетарианский</button>
                 </div>
+                <div class="dishes"></div>
+            </section>
 
-                <div class="dish">
-                    <img src="images/soup2.jpg" alt="Фо Га">
-                    <p class="dish-price">550 ₽</p>
-                    <p class="dish-name">Фо Га</p>
-                    <p class="dish-weight">330 г</p>
-                    <button class="dish-button">Добавить</button>
+            <!-- ===== 2. ГЛАВНОЕ БЛЮДО ===== -->
+            <section class="menu-section" data-category="main">
+                <h2 class="section-title">Выберите главное блюдо</h2>
+                <div class="filters">
+                    <button class="filter-btn" data-kind="fish">рыбное</button>
+                    <button class="filter-btn" data-kind="meat">мясное</button>
+                    <button class="filter-btn" data-kind="veg">вегетарианское</button>
                 </div>
+                <div class="dishes"></div>
+            </section>
 
-                <div class="dish">
-                    <img src="images/soup3.jpg" alt="Бун Бо Хуэ">
-                    <p class="dish-price">600 ₽</p>
-                    <p class="dish-name">Бун Бо Хуэ</p>
-                    <p class="dish-weight">330 г</p>
-                    <button class="dish-button">Добавить</button>
+            <!-- ===== 3. САЛАТЫ И СТАРТЕРЫ ===== -->
+            <section class="menu-section" data-category="salad">
+                <h2 class="section-title">Выберите салат или стартер</h2>
+                <div class="filters">
+                    <button class="filter-btn" data-kind="fish">рыбный</button>
+                    <button class="filter-btn" data-kind="meat">мясной</button>
+                    <button class="filter-btn" data-kind="veg">вегетарианский</button>
                 </div>
+                <div class="dishes"></div>
+            </section>
 
-            </div>
-        </section>
-
-        <!-- ===== ГЛАВНОЕ БЛЮДО ===== -->
-        <section class="menu-section">
-            <h2 class="section-title">Выберите главное блюдо</h2>
-
-            <div class="dishes">
-
-                <div class="dish">
-                    <img src="images/main1.jpg" alt="Ком Там">
-                    <p class="dish-price">450 ₽</p>
-                    <p class="dish-name">Ком Там</p>
-                    <p class="dish-weight">250 г</p>
-                    <button class="dish-button">Добавить</button>
+            <!-- ===== 4. НАПИТКИ ===== -->
+            <section class="menu-section" data-category="drink">
+                <h2 class="section-title">Выберите напиток</h2>
+                <div class="filters">
+                    <button class="filter-btn" data-kind="cold">холодный</button>
+                    <button class="filter-btn" data-kind="hot">горячий</button>
                 </div>
+                <div class="dishes"></div>
+            </section>
 
-                <div class="dish">
-                    <img src="images/main2.jpg" alt="Бань Ми">
-                    <p class="dish-price">350 ₽</p>
-                    <p class="dish-name">Бань Ми</p>
-                    <p class="dish-weight">310 г</p>
-                    <button class="dish-button">Добавить</button>
+            <!-- ===== 5. ДЕСЕРТЫ ===== -->
+            <section class="menu-section" data-category="dessert">
+                <h2 class="section-title">Выберите десерт</h2>
+                <div class="filters">
+                    <button class="filter-btn" data-kind="small">маленькая порция</button>
+                    <button class="filter-btn" data-kind="medium">средняя порция</button>
+                    <button class="filter-btn" data-kind="large">большая порция</button>
                 </div>
+                <div class="dishes"></div>
+            </section>
 
-                <div class="dish">
-                    <img src="images/main3.jpg" alt="Бун Ча">
-                    <p class="dish-price">480 ₽</p>
-                    <p class="dish-name">Бун Ча</p>
-                    <p class="dish-weight">280 г</p>
-                    <button class="dish-button">Добавить</button>
-                </div>
+            <!-- ============================================================
+             ФОРМА ЗАКАЗА (Lấy từ Lab 4, giữ nguyên)
+             ============================================================ -->
+            <section class="order-section" id="order">
+                <h2 class="order-title">Оформить заказ</h2>
+                <form class="order-form" action="https://httpbin.org/post" method="POST">
+                    <fieldset class="order-fieldset">
+                        <legend class="order-legend">Ваш заказ</legend>
 
-            </div>
-        </section>
-
-        <!-- ===== НАПИТКИ ===== -->
-        <section class="menu-section">
-            <h2 class="section-title">Выберите напиток</h2>
-
-            <div class="dishes">
-
-                <div class="dish">
-                    <img src="images/drink1.jpg" alt="Апельсиновый сок">
-                    <p class="dish-price">220 ₽</p>
-                    <p class="dish-name">Апельсиновый сок</p>
-                    <p class="dish-weight">300 мл</p>
-                    <button class="dish-button">Добавить</button>
-                </div>
-
-                <div class="dish">
-                    <img src="images/drink2.jpg" alt="Чай с лимоном">
-                    <p class="dish-price">200 ₽</p>
-                    <p class="dish-name">Чай с лимоном</p>
-                    <p class="dish-weight">300 мл</p>
-                    <button class="dish-button">Добавить</button>
-                </div>
-
-                <div class="dish">
-                    <img src="images/drink3.jpg" alt="Морковный сок">
-                    <p class="dish-price">310 ₽</p>
-                    <p class="dish-name">Морковный сок</p>
-                    <p class="dish-weight">300 мл</p>
-                    <button class="dish-button">Добавить</button>
-                </div>
-
-            </div>
-        </section>
-        <!-- ============================================================
-     ФОРМА ЗАКАЗА (Лабораторная работа № 3)
-     ============================================================ -->
-        <section class="order-section" id="order">
-
-            <h2 class="order-title">Оформить заказ</h2>
-
-            <form class="order-form" action="https://httpbin.org/post" method="POST">
-
-                <!-- ===== БЛОК 1 — ВАШ ЗАКАЗ ===== -->
-                <fieldset class="order-fieldset">
-                    <legend class="order-legend">Ваш заказ</legend>
-
-                    <!-- СУП -->
-                    <div class="form-row">
-                        <label for="soup">Суп:</label>
-                        <select id="soup" name="soup">
-                            <option value="">Выберите суп</option>
-                            <option value="pho-bo">Фо Бо</option>
-                            <option value="pho-ga">Фо Га</option>
-                            <option value="bun-bo-hue">Бун Бо Хуэ</option>
-                        </select>
-                    </div>
-
-                    <!-- ГЛАВНОЕ БЛЮДО -->
-                    <div class="form-row">
-                        <label for="main-dish">Главное блюдо:</label>
-                        <select id="main-dish" name="main_dish">
-                            <option value="">Выберите главное блюдо</option>
-                            <option value="com-tam">Ком Там</option>
-                            <option value="banh-mi">Бань Ми с курицей</option>
-                            <option value="bun-cha">Бун Ча с говядиной</option>
-                        </select>
-                    </div>
-
-                    <!-- НАПИТОК -->
-                    <div class="form-row">
-                        <label for="drink">Напиток:</label>
-                        <select id="drink" name="drink">
-                            <option value="">Выберите напиток</option>
-                            <option value="vietnamese-coffee">Вьетнамский кофе</option>
-                            <option value="lemon-tea">Чай с лимоном</option>
-                            <option value="coconut-water">Кокосовый сок</option>
-                        </select>
-                    </div>
-
-                    <!-- КОММЕНТАРИЙ -->
-                    <div class="form-row">
-                        <label for="comment">Комментарий к заказу:</label>
-                        <textarea id="comment" name="comment" rows="5"
-                            placeholder="Например: без острого, без лука..."></textarea>
-                    </div>
-                </fieldset>
-
-                <!-- ===== БЛОК 2 — ДАННЫЕ КЛИЕНТА ===== -->
-                <fieldset class="order-fieldset">
-                    <legend class="order-legend">Данные клиента</legend>
-
-                    <!-- ИМЯ -->
-                    <div class="form-row">
-                        <label for="name">Имя:</label>
-                        <input type="text" id="name" name="name" placeholder="Иван Иванов" required>
-                    </div>
-
-                    <!-- EMAIL -->
-                    <div class="form-row">
-                        <label for="email">Email:</label>
-                        <input type="email" id="email" name="email" placeholder="ivan@example.com" required>
-                    </div>
-
-                    <!-- ПОДПИСКА -->
-                    <div class="form-row form-row--checkbox">
-                        <input type="checkbox" id="subscribe" name="subscribe" checked>
-                        <label for="subscribe">Подписаться на рассылку новостей</label>
-                    </div>
-
-                    <!-- ТЕЛЕФОН -->
-                    <div class="form-row">
-                        <label for="phone">Телефон:</label>
-                        <input type="tel" id="phone" name="phone" placeholder="+7 (999) 123-45-67" required>
-                    </div>
-
-                    <!-- АДРЕС -->
-                    <div class="form-row">
-                        <label for="address">Адрес доставки:</label>
-                        <input type="text" id="address" name="address" placeholder="Москва, ул. Пушкина, д. 1" required>
-                    </div>
-
-                    <!-- ВРЕМЯ ДОСТАВКИ (radio) -->
-                    <fieldset class="radio-group">
-                        <legend>Время доставки:</legend>
-
-                        <div class="radio-option">
-                            <input type="radio" id="delivery-asap" name="delivery_time" value="asap" required>
-                            <label for="delivery-asap">Как можно скорее</label>
+                        <div id="order-list" class="order-list">
+                            <p class="order-empty">Ничего не выбрано</p>
+                        </div>
+                        <div id="order-cost" class="order-cost" style="display: none;">
+                            <span class="order-cost-label">Стоимость заказа:</span>
+                            <span id="cost-value" class="order-cost-value">0 ₽</span>
                         </div>
 
-                        <div class="radio-option">
-                            <input type="radio" id="delivery-exact" name="delivery_time" value="exact">
-                            <label for="delivery-exact">Указать точное время</label>
+                        <!-- Cần thêm 2 input ẩn cho Salad và Dessert -->
+                        <input type="hidden" name="soup" id="hidden-soup">
+                        <input type="hidden" name="main_dish" id="hidden-main">
+                        <input type="hidden" name="salad" id="hidden-salad">
+                        <input type="hidden" name="drink" id="hidden-drink">
+                        <input type="hidden" name="dessert" id="hidden-dessert">
+
+                        <div class="form-row">
+                            <label for="comment">Комментарий к заказу:</label>
+                            <textarea id="comment" name="comment" rows="5"
+                                placeholder="Например: без острого, без лука..."></textarea>
                         </div>
                     </fieldset>
 
-                    <!-- ТОЧНОЕ ВРЕМЯ -->
-                    <div class="form-row">
-                        <label for="time">Точное время:</label>
-                        <input type="time" id="time" name="time" min="07:00" max="23:00" step="300">
-                    </div>
+                    <fieldset class="order-fieldset">
+                        <legend class="order-legend">Данные клиента</legend>
+                        <!-- ... (Giữ nguyên phần thông tin khách hàng và nút bấm của bạn) ... -->
+                        <div class="form-row">
+                            <label for="name">Имя:</label>
+                            <input type="text" id="name" name="name" placeholder="Иван Иванов" required>
+                        </div>
+                        <div class="form-row">
+                            <label for="email">Email:</label>
+                            <input type="email" id="email" name="email" placeholder="ivan@example.com" required>
+                        </div>
+                        <div class="form-row form-row--checkbox">
+                            <input type="checkbox" id="subscribe" name="subscribe" checked>
+                            <label for="subscribe">Подписаться на рассылку новостей</label>
+                        </div>
+                        <div class="form-row">
+                            <label for="phone">Телефон:</label>
+                            <input type="tel" id="phone" name="phone" placeholder="+7 (999) 123-45-67" required>
+                        </div>
+                        <div class="form-row">
+                            <label for="address">Адрес доставки:</label>
+                            <input type="text" id="address" name="address" placeholder="Москва, ул. Пушкина, д. 1"
+                                required>
+                        </div>
+                        <fieldset class="radio-group">
+                            <legend>Время доставки:</legend>
+                            <div class="radio-option">
+                                <input type="radio" id="delivery-asap" name="delivery_time" value="asap" required>
+                                <label for="delivery-asap">Как можно скорее</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="delivery-exact" name="delivery_time" value="exact">
+                                <label for="delivery-exact">Указать точное время</label>
+                            </div>
+                        </fieldset>
+                        <div class="form-row">
+                            <label for="time">Точное время:</label>
+                            <input type="time" id="time" name="time" min="07:00" max="23:00" step="300">
+                        </div>
+                        <div class="form-buttons">
+                            <button type="reset" class="btn btn--reset">Сбросить</button>
+                            <button type="submit" class="btn btn--submit">Отправить</button>
+                        </div>
+                    </fieldset>
+                </form>
+            </section>
+        </main>
 
-                    <!-- КНОПКИ -->
-                    <div class="form-buttons">
-                        <button type="reset" class="btn btn--reset">Сбросить</button>
-                        <button type="submit" class="btn btn--submit">Отправить</button>
-                    </div>
+        <footer class="footer" id="contacts">
+            <div class="footer-content">
+                <p>Food Construct — доставка бизнес-ланчей в Москве</p>
+                <p>Телефон: <a href="tel:+79991234567">+7 (999) 123-45-67</a></p>
+                <p>Email: <a href="mailto:info@foodconstruct.ru">info@foodconstruct.ru</a></p>
+                <p>Адрес: Москва, Россия</p>
+            </div>
+        </footer>
 
-                </fieldset>
+        <!-- Nhúng 3 file JS theo đúng thứ tự -->
+        <script src="js/data.js"></script>
+        <script src="js/render.js"></script>
+        <script src="js/order.js"></script>
 
-            </form>
-
-        </section>
-
-        <!-- ===== JavaScript: проверка, что выбран хотя бы 1 мясной/основной раздел ===== -->
-        <script>
-            document.querySelector('.order-form').addEventListener('submit', function (e) {
-                const soup = document.getElementById('soup').value;
-                const main = document.getElementById('main-dish').value;
-                const drink = document.getElementById('drink').value;
-
-                if (!soup && !main && !drink) {
-                    e.preventDefault();
-                    alert('Пожалуйста, выберите хотя бы одно блюдо или напиток!');
-                }
-            });
-        </script>
-
-    </main>
-
-    <footer class="footer" id="contacts">
-        <div class="footer-content">
-            <p>Food Construct — доставка бизнес-ланчей в Москве</p>
-
-            <p>
-                Телефон:
-                <a href="tel:+79991234567">+7 (999) 123-45-67</a>
-            </p>
-
-            <p>
-                Email:
-                <a href="mailto:info@foodconstruct.ru">info@foodconstruct.ru</a>
-            </p>
-
-            <p>Адрес: Москва, Россия</p>
-        </div>
-    </footer>
-
+        <!-- Nhúng JS Lab 5 -->
+        <script src="js/filter.js"></script>
+        </footer>
 </body>
 
 </html>

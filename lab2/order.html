@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Оформить заказ — Food Construct</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="lab2.css">
+</head>
+<body>
+    <header class="header">
+        <h1 class="header-title">Food Construct</h1>
+        <nav class="nav">
+            <a href="../lab1/lab1.html">О нас</a>
+            <a href="lab2.html">Собрать ланч</a>
+            <a href="order.html" class="active">Оформить заказ</a>
+            <a href="#contacts">Контакты</a>
+        </nav>
+    </header>
+
+    <main class="main">
+        <h2 class="section-title">Состав заказа</h2>
+        <div id="order-composition" class="dishes" style="margin-bottom: 40px;">
+            <!-- JS sẽ vẽ các thẻ món ăn ở đây -->
+        </div>
+
+        <h2 class="section-title">Оформление заказа</h2>
+        <form id="checkout-form" action="#" method="POST">
+            <fieldset class="order-fieldset">
+                <legend class="order-legend">Данные клиента</legend>
+                <div class="form-row">
+                    <label for="name">Имя:</label>
+                    <input type="text" id="name" name="full_name" placeholder="Иван Иванов" required>
+                </div>
+                <div class="form-row">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" placeholder="ivan@example.com" required>
+                </div>
+                <div class="form-row form-row--checkbox">
+                    <input type="checkbox" id="subscribe" name="subscribe" value="1" checked>
+                    <label for="subscribe">Подписаться на рассылку</label>
+                </div>
+                <div class="form-row">
+                    <label for="phone">Телефон:</label>
+                    <input type="tel" id="phone" name="phone" placeholder="+7 (999) 123-45-67" required>
+                </div>
+                <div class="form-row">
+                    <label for="address">Адрес доставки:</label>
+                    <input type="text" id="address" name="delivery_address" placeholder="Москва, ул. Пушкина, д. 1" required>
+                </div>
+                
+                <fieldset class="radio-group">
+                    <legend>Время доставки:</legend>
+                    <div class="radio-option">
+                        <input type="radio" id="delivery-now" name="delivery_type" value="now" required checked>
+                        <label for="delivery-now">Как можно скорее</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="delivery-time" name="delivery_type" value="by_time">
+                        <label for="delivery-time">Указать точное время</label>
+                    </div>
+                </fieldset>
+
+                <div class="form-row">
+                    <label for="time">Точное время:</label>
+                    <input type="time" id="time" name="delivery_time" min="07:00" max="23:00" step="300">
+                </div>
+
+                <div class="form-row">
+                    <label for="comment">Комментарий к заказу:</label>
+                    <textarea id="comment" name="comment" rows="3" placeholder="Например: без острого..."></textarea>
+                </div>
+
+                <div class="form-buttons">
+                    <button type="button" class="btn btn--reset" onclick="window.location.href='lab2.html'">Назад</button>
+                    <button type="submit" class="btn btn--submit">Отправить</button>
+                </div>
+            </fieldset>
+        </form>
+    </main>
+
+    <footer class="footer" id="contacts">
+        <div class="footer-content">
+            <p>Food Construct — доставка бизнес-ланчей в Москве</p>
+        </div>
+    </footer>
+
+    <script src="js/storage.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/render.js"></script>
+    <script src="js/order-page.js"></script> <!-- Script riêng cho trang này -->
+</body>
+</html>

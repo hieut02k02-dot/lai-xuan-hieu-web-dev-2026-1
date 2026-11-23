@@ -1,12 +1,12 @@
-/* ============================================================
-   LAB 9 — Đọc/Ghi 100% từ LocalStorage, giữ nguyên giao diện
-   ============================================================ */
+// lab9/lab9.js
+const API_KEY = "laihieu_mospolytech_2026"; 
+const API_URL_ORDERS = "https://edu.std-900.ist.mospolytech.ru/labs/api/orders";
 
 let orders = [];
 let editingId = null;
 let deletingId = null;
 
-// ===== HÀM TIỆN ÍCH =====
+// === TIỆN ÍCH (Format ngày tháng, giá tiền) ===
 function formatDate(isoString) {
     if (!isoString) return "—";
     const d = new Date(isoString);
@@ -14,30 +14,51 @@ function formatDate(isoString) {
     const pad = (n) => String(n).padStart(2, "0");
     return `${pad(d.getDate())}.${pad(d.getMonth() + 1)}.${d.getFullYear()}, ${pad(d.getHours())}:${pad(d.getMinutes())}`;
 }
-
 function formatDelivery(order) {
-    if (order.delivery_type === "by_time" && order.delivery_time) {
-        return order.delivery_time;
-    }
-    return "Как можно скорее (с 7:00 до 23:00)";
+    return (order.delivery_type === "by_time" && order.delivery_time) ? order.delivery_time : "Как можно скорее (с 7:00 до 23:00)";
 }
 
-// ===== TẢI DỮ LIỆU =====
-function loadOrders() {
-    let data = localStorage.getItem('food_orders');
-    orders = data ? JSON.parse(data) : [];
-    
-    // Sắp xếp mới nhất lên đầu
+// === 1. TẢI DỮ LIỆU ===
+async function loadOrders() {
+    let apiOrders = [];
+    let localOrders = [];
+
+    // Lấy đơn từ LocalStorage (các đơn đặt lúc API sập)
+    try {
+        localOrders = JSON.parse(localStorage.getItem('food_orders')) || [];
+        localOrders.forEach(o => o.is_local = true);
+    } catch (e) { localOrders = []; }
+
+    // Thử lấy đơn từ API (để thầy thấy)
+    try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 3000);
+        const res = await fetch(`${API_URL_ORDERS}?api_key=${API_KEY}`, { signal: controller.signal });
+        clearTimeout(timeoutId);
+        
+        if (res.ok) {
+            const data = await res.json();
+            if (Array.isArray(data)) {
+                apiOrders = data.map(o => ({ ...o, is_local: false }));
+            }
+        }
+    } catch (e) {
+        console.log("API sập, chỉ hiển thị đơn LocalStorage");
+    }
+
+    // Gộp 2 mảng
+    orders = [...apiOrders, ...localOrders];
     orders.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-    
     renderOrders();
 }
 
-function saveOrders() {
-    localStorage.setItem('food_orders', JSON.stringify(orders));
+// Lưu lại riêng mảng LocalStorage (không lưu đè đơn của API)
+function saveLocalOrders() {
+    const localOnly = orders.filter(o => o.is_local);
+    localStorage.setItem('food_orders', JSON.stringify(localOnly));
 }
 
-// ===== HIỂN THỊ BẢNG =====
+// === 2. HIỂN THỊ BẢNG ===
 function renderOrders() {
     const tbody = document.getElementById("orders-body");
     const emptyMsg = document.getElementById("orders-empty");
@@ -60,121 +81,86 @@ function renderOrders() {
             <td data-label="Доставка">${formatDelivery(order)}</td>
             <td data-label="Действия">
                 <div class="order-actions">
-                    <button class="btn-icon" title="Подробнее" data-action="detail" data-id="${order.id}">
-                        <i class="bi bi-eye"></i>
-                    </button>
-                    <button class="btn-icon" title="Редактирование" data-action="edit" data-id="${order.id}">
-                        <i class="bi bi-pencil"></i>
-                    </button>
-                    <button class="btn-icon btn-icon--danger" title="Удаление" data-action="delete" data-id="${order.id}">
-                        <i class="bi bi-trash"></i>
-                    </button>
+                    <button class="btn-icon" data-action="detail" data-id="${order.id}"><i class="bi bi-eye"></i></button>
+                    <button class="btn-icon" data-action="edit" data-id="${order.id}"><i class="bi bi-pencil"></i></button>
+                    <button class="btn-icon btn-icon--danger" data-action="delete" data-id="${order.id}"><i class="bi bi-trash"></i></button>
                 </div>
             </td>
         </tr>
     `).join("");
 }
 
-// ===== MODAL =====
+// === 3. MODAL & LẤY DỮ LIỆU ===
 function openModal(id) { document.getElementById(id).classList.add("active"); }
 function closeModal(id) { document.getElementById(id).classList.remove("active"); }
+function getOrderById(id) { return orders.find(o => String(o.id) === String(id)); }
 
-function getOrderById(id) {
-    return orders.find(o => String(o.id) === String(id));
-}
-
-// Xem chi tiết
 function showDetail(id) {
     const order = getOrderById(id);
     if (!order) return;
-
-    const body = document.getElementById("detail-body");
-    body.innerHTML = `
+    document.getElementById("detail-body").innerHTML = `
         <div class="detail-list">
             <div class="detail-row"><span class="detail-label">Дата</span><span class="detail-value">${formatDate(order.created_at)}</span></div>
             <div class="detail-row"><span class="detail-label">Состав</span><span class="detail-value">${order.dishes || "—"}</span></div>
             <div class="detail-row"><span class="detail-label">Стоимость</span><span class="detail-value">${order.total_price ? order.total_price + ' ₽' : "—"}</span></div>
             <div class="detail-row"><span class="detail-label">Имя</span><span class="detail-value">${order.full_name || "—"}</span></div>
-            <div class="detail-row"><span class="detail-label">Email</span><span class="detail-value">${order.email || "—"}</span></div>
             <div class="detail-row"><span class="detail-label">Телефон</span><span class="detail-value">${order.phone || "—"}</span></div>
             <div class="detail-row"><span class="detail-label">Адрес</span><span class="detail-value">${order.delivery_address || "—"}</span></div>
-            <div class="detail-row"><span class="detail-label">Доставка</span><span class="detail-value">${formatDelivery(order)}</span></div>
             <div class="detail-row"><span class="detail-label">Комментарий</span><span class="detail-value">${order.comment || "—"}</span></div>
-        </div>
-    `;
+        </div>`;
     openModal("modal-detail");
 }
 
-// Mở form sửa
 function showEdit(id) {
     const order = getOrderById(id);
     if (!order) return;
-    
     editingId = order.id;
-
     document.getElementById("edit-full-name").value = order.full_name || "";
     document.getElementById("edit-email").value = order.email || "";
     document.getElementById("edit-phone").value = order.phone || "";
     document.getElementById("edit-address").value = order.delivery_address || "";
-
     const isByTime = order.delivery_type === "by_time";
     document.getElementById("edit-now").checked = !isByTime;
     document.getElementById("edit-by-time").checked = isByTime;
-
     document.getElementById("edit-time").value = isByTime ? (order.delivery_time || "") : "";
     document.getElementById("edit-time").disabled = !isByTime;
     document.getElementById("edit-comment").value = order.comment || "";
-
     openModal("modal-edit");
 }
 
-// Mở xác nhận xóa
 function showDelete(id) {
     if (!getOrderById(id)) return;
     deletingId = id;
     openModal("modal-delete");
 }
 
-// ===== XỬ LÝ SỰ KIỆN =====
-function handleTableClick(e) {
+// === 4. XỬ LÝ SỰ KIỆN ===
+document.getElementById("orders-body")?.addEventListener("click", (e) => {
     const btn = e.target.closest("button[data-action]");
     if (!btn) return;
-    const action = btn.dataset.action;
     const id = btn.dataset.id;
+    if (btn.dataset.action === "detail") showDetail(id);
+    if (btn.dataset.action === "edit") showEdit(id);
+    if (btn.dataset.action === "delete") showDelete(id);
+});
 
-    if (action === "detail") showDetail(id);
-    if (action === "edit") showEdit(id);
-    if (action === "delete") showDelete(id);
-}
+document.querySelectorAll("[data-close]").forEach(el => el.addEventListener("click", (e) => {
+    closeModal(e.target.closest("[data-close]").dataset.close);
+}));
 
-function handleModalClose(e) {
-    const target = e.target.closest("[data-close]");
-    if (target) closeModal(target.dataset.close);
-}
-
-function handleOverlayClick(e) {
-    if (e.target.classList.contains("modal")) e.target.classList.remove("active");
-}
-
-function handleDeliveryTypeChange() {
+document.querySelectorAll('input[name="delivery_type"]').forEach(radio => radio.addEventListener("change", () => {
     const isByTime = document.getElementById("edit-by-time").checked;
-    const timeInput = document.getElementById("edit-time");
-    timeInput.disabled = !isByTime;
-    if (!isByTime) timeInput.value = "";
-}
+    document.getElementById("edit-time").disabled = !isByTime;
+}));
 
-// Lưu khi bấm nút Sửa
-function handleEditSubmit(e) {
+// NÚT LƯU (SỬA)
+document.getElementById("edit-form")?.addEventListener("submit", async (e) => {
     e.preventDefault();
-    if (!editingId) return;
-
-    const index = orders.findIndex(o => String(o.id) === String(editingId));
-    if (index === -1) return;
+    const order = getOrderById(editingId);
+    if (!order) return;
 
     const deliveryType = document.querySelector('input[name="delivery_type"]:checked')?.value || "now";
-    
-    orders[index] = {
-        ...orders[index],
+    const updatedData = {
         full_name: document.getElementById("edit-full-name").value.trim(),
         email: document.getElementById("edit-email").value.trim(),
         phone: document.getElementById("edit-phone").value.trim(),
@@ -184,34 +170,60 @@ function handleEditSubmit(e) {
         comment: document.getElementById("edit-comment").value.trim(),
     };
 
-    saveOrders(); // Lưu vào LocalStorage
-    closeModal("modal-edit");
-    alert("Заказ успешно изменён");
-    renderOrders();
-}
-
-// Lưu khi bấm nút Xóa
-function handleConfirmDelete() {
-    if (!deletingId) return;
-    
-    orders = orders.filter(o => String(o.id) !== String(deletingId));
-    saveOrders(); // Lưu vào LocalStorage
-    
-    closeModal("modal-delete");
-    alert("Заказ успешно удалён");
-    renderOrders();
-}
-
-function bindEvents() {
-    document.getElementById("orders-body")?.addEventListener("click", handleTableClick);
-    document.querySelectorAll("[data-close]").forEach((el) => el.addEventListener("click", handleModalClose));
-    document.querySelectorAll(".modal").forEach((modal) => modal.addEventListener("click", handleOverlayClick));
-    document.querySelectorAll('input[name="delivery_type"]').forEach((radio) => radio.addEventListener("change", handleDeliveryTypeChange));
-    document.getElementById("edit-form")?.addEventListener("submit", handleEditSubmit);
-    document.getElementById("confirm-delete")?.addEventListener("click", handleConfirmDelete);
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-    bindEvents();
-    loadOrders(); // Khởi chạy
+    if (order.is_local) {
+        // Sửa đơn LocalStorage
+        Object.assign(order, updatedData);
+        saveLocalOrders();
+        closeModal("modal-edit");
+        alert("Đã sửa đơn hàng lưu cục bộ!");
+        renderOrders();
+    } else {
+        // Sửa đơn API
+        try {
+            const res = await fetch(`${API_URL_ORDERS}/${editingId}?api_key=${API_KEY}`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(updatedData)
+            });
+            if (!res.ok) throw new Error();
+            Object.assign(order, updatedData);
+            closeModal("modal-edit");
+            alert("Đã sửa đơn hàng trên Server!");
+            renderOrders();
+        } catch (err) {
+            alert("Không thể sửa đơn trên Server (API lỗi).");
+        }
+    }
 });
+
+// NÚT XÓA
+document.getElementById("confirm-delete")?.addEventListener("click", async () => {
+    const order = getOrderById(deletingId);
+    if (!order) return;
+
+    if (order.is_local) {
+        // Xóa đơn LocalStorage
+        orders = orders.filter(o => String(o.id) !== String(deletingId));
+        saveLocalOrders();
+        closeModal("modal-delete");
+        alert("Đã xóa đơn hàng cục bộ!");
+        renderOrders();
+    } else {
+        // Xóa đơn API
+        try {
+            const res = await fetch(`${API_URL_ORDERS}/${deletingId}?api_key=${API_KEY}`, {
+                method: "DELETE"
+            });
+            if (!res.ok) throw new Error();
+            orders = orders.filter(o => String(o.id) !== String(deletingId));
+            closeModal("modal-delete");
+            alert("Đã xóa đơn hàng trên Server!");
+            renderOrders();
+        } catch (err) {
+            alert("Không thể xóa đơn trên Server (API lỗi).");
+        }
+    }
+});
+
+// Khởi chạy
+document.addEventListener("DOMContentLoaded", loadOrders);

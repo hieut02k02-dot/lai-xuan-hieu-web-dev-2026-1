@@ -1,7 +1,6 @@
 // ==========================================
 // LAB 6: VALIDATION & NOTIFICATIONS
 // ==========================================
-
 document.querySelector('.order-form').addEventListener('submit', function (event) {
     // Ngăn form gửi đi ngay lập tức để kiểm tra
     event.preventDefault();

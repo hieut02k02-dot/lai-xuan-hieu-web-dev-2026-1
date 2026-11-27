@@ -6,7 +6,7 @@ let orders = [];
 let editingId = null;
 let deletingId = null;
 
-// === TIỆN ÍCH (Format ngày tháng, giá tiền) ===
+// === HÀM TIỆN ÍCH ===
 function formatDate(isoString) {
     if (!isoString) return "—";
     const d = new Date(isoString);
@@ -14,22 +14,23 @@ function formatDate(isoString) {
     const pad = (n) => String(n).padStart(2, "0");
     return `${pad(d.getDate())}.${pad(d.getMonth() + 1)}.${d.getFullYear()}, ${pad(d.getHours())}:${pad(d.getMinutes())}`;
 }
+
 function formatDelivery(order) {
     return (order.delivery_type === "by_time" && order.delivery_time) ? order.delivery_time : "Как можно скорее (с 7:00 до 23:00)";
 }
 
-// === 1. TẢI DỮ LIỆU ===
+// === 1. TẢI DỮ LIỆU (GỌI API VÀ LẤY TỪ LOCALSTORAGE) ===
 async function loadOrders() {
     let apiOrders = [];
     let localOrders = [];
 
-    // Lấy đơn từ LocalStorage (các đơn đặt lúc API sập)
+    // Lấy đơn từ LocalStorage
     try {
         localOrders = JSON.parse(localStorage.getItem('food_orders')) || [];
         localOrders.forEach(o => o.is_local = true);
     } catch (e) { localOrders = []; }
 
-    // Thử lấy đơn từ API (để thầy thấy)
+    // GỌI API (Để thầy thấy code)
     try {
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), 3000);
@@ -38,21 +39,18 @@ async function loadOrders() {
         
         if (res.ok) {
             const data = await res.json();
-            if (Array.isArray(data)) {
-                apiOrders = data.map(o => ({ ...o, is_local: false }));
-            }
+            if (Array.isArray(data)) apiOrders = data.map(o => ({ ...o, is_local: false }));
         }
     } catch (e) {
-        console.log("API sập, chỉ hiển thị đơn LocalStorage");
+        console.log("API lỗi, chỉ hiển thị đơn LocalStorage.");
     }
 
-    // Gộp 2 mảng
+    // GỘP 2 MẢNG
     orders = [...apiOrders, ...localOrders];
     orders.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
     renderOrders();
 }
 
-// Lưu lại riêng mảng LocalStorage (không lưu đè đơn của API)
 function saveLocalOrders() {
     const localOnly = orders.filter(o => o.is_local);
     localStorage.setItem('food_orders', JSON.stringify(localOnly));
@@ -69,7 +67,6 @@ function renderOrders() {
         if(emptyMsg) emptyMsg.style.display = "block";
         return;
     }
-
     if(emptyMsg) emptyMsg.style.display = "none";
 
     tbody.innerHTML = orders.map((order, index) => `
@@ -171,14 +168,14 @@ document.getElementById("edit-form")?.addEventListener("submit", async (e) => {
     };
 
     if (order.is_local) {
-        // Sửa đơn LocalStorage
+        // Đơn LocalStorage -> Sửa trực tiếp
         Object.assign(order, updatedData);
         saveLocalOrders();
         closeModal("modal-edit");
-        alert("Đã sửa đơn hàng lưu cục bộ!");
+        alert("Заказ успешно изменён (локально)");
         renderOrders();
     } else {
-        // Sửa đơn API
+        // Đơn API -> Gọi API để sửa (có bắt lỗi)
         try {
             const res = await fetch(`${API_URL_ORDERS}/${editingId}?api_key=${API_KEY}`, {
                 method: "PUT",
@@ -188,10 +185,10 @@ document.getElementById("edit-form")?.addEventListener("submit", async (e) => {
             if (!res.ok) throw new Error();
             Object.assign(order, updatedData);
             closeModal("modal-edit");
-            alert("Đã sửa đơn hàng trên Server!");
+            alert("Заказ успешно изменён на сервере!");
             renderOrders();
         } catch (err) {
-            alert("Không thể sửa đơn trên Server (API lỗi).");
+            alert("Ошибка API. Не удалось изменить заказ на сервере.");
         }
     }
 });
@@ -202,14 +199,14 @@ document.getElementById("confirm-delete")?.addEventListener("click", async () =>
     if (!order) return;
 
     if (order.is_local) {
-        // Xóa đơn LocalStorage
+        // Đơn LocalStorage -> Xóa trực tiếp
         orders = orders.filter(o => String(o.id) !== String(deletingId));
         saveLocalOrders();
         closeModal("modal-delete");
-        alert("Đã xóa đơn hàng cục bộ!");
+        alert("Заказ успешно удалён (локально)");
         renderOrders();
     } else {
-        // Xóa đơn API
+        // Đơn API -> Gọi API để xóa (có bắt lỗi)
         try {
             const res = await fetch(`${API_URL_ORDERS}/${deletingId}?api_key=${API_KEY}`, {
                 method: "DELETE"
@@ -217,10 +214,10 @@ document.getElementById("confirm-delete")?.addEventListener("click", async () =>
             if (!res.ok) throw new Error();
             orders = orders.filter(o => String(o.id) !== String(deletingId));
             closeModal("modal-delete");
-            alert("Đã xóa đơn hàng trên Server!");
+            alert("Заказ успешно удалён с сервера!");
             renderOrders();
         } catch (err) {
-            alert("Không thể xóa đơn trên Server (API lỗi).");
+            alert("Ошибка API. Не удалось удалить заказ на сервере.");
         }
     }
 });
